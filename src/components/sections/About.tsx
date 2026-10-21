@@ -1,19 +1,22 @@
+import { Img } from '#/components/Img'
 import { aboutHighlights } from '#/content/site'
+
+// Foto quadrada numa caixa 4:5: preenche pela altura, então é desenhada com 1.25 × a largura da caixa
+// (caixa ~518px no desktop; ocupa a linha inteira quando as colunas quebram, abaixo de 964px).
+const portraitSizes = '(min-width: 1240px) 648px, (min-width: 964px) calc(62.5vw - 127px), calc(125vw - 60px)'
 
 export function About() {
   return (
     <section aria-labelledby="sobre-titulo" className="bg-cream text-paper-ink">
       <div className="mx-auto flex max-w-310 flex-wrap items-center gap-14 px-6 py-26">
-        {/* TODO: trocar pelo retrato do Bruno (<Img>) quando a foto chegar. */}
-        <div
-          className="flex aspect-4/5 min-w-0 flex-[1_1_380px] items-end justify-center overflow-hidden rounded-[18px] bg-[#DCD5CA]"
-          role="img"
-          aria-label="Espaço para a foto do Bruno"
-        >
-          <svg viewBox="0 0 200 220" className="block h-auto w-[72%]" fill="#B9AF9F" aria-hidden="true">
-            <circle cx="100" cy="72" r="44" />
-            <path d="M14 220c0-52 38-92 86-92s86 40 86 92z" />
-          </svg>
+        <div className="aspect-4/5 min-w-0 flex-[1_1_380px] overflow-hidden rounded-[18px] bg-[#DCD5CA]">
+          <Img
+            name="bruno-candido-fotografo"
+            alt="Bruno Candido sorrindo, de boné e camiseta pretos, segurando uma câmera Canon no estúdio"
+            sizes={portraitSizes}
+            position="45% 50%"
+            className="block size-full object-cover"
+          />
         </div>
         <div className="flex min-w-0 flex-[1_1_480px] flex-col gap-6">
           <p className="text-xs tracking-[0.24em] text-rust uppercase">Prazer, Bruno Candido</p>

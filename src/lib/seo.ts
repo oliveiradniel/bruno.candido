@@ -50,6 +50,7 @@ export function buildJsonLd() {
       '@id': id('person'),
       name: site.person,
       jobTitle: site.jobTitle,
+      image: imageUrl('bruno-candido-fotografo'),
       url: absUrl('/'),
       sameAs: site.sameAs,
       knowsAbout: site.knowsAbout,

@@ -54,16 +54,27 @@ for (const file of files) {
   manifest[name] = { width, height, widths }
 }
 
-// Imagem de compartilhamento (Open Graph) 1200x630.
-if (force || !existsSync(path.join(root, 'public/og-image.jpg'))) {
-  await sharp(path.join(srcDir, 'familia-festa-aniversario.jpg'))
-    .resize({ width: 1200, height: 630, fit: 'cover', position: 'attention' })
-    .jpeg({ quality: 82, mozjpeg: true })
-    .toFile(path.join(root, 'public/og-image.jpg'))
+// Ícones e imagem de compartilhamento a partir do logo
+// (o original tem só 150px; trocar por um logo maior quando houver).
+const logo = path.join(srcDir, 'bruno-candido-logo.jpg')
+
+// Open Graph 1200x630: logo centralizado (o WhatsApp recorta a prévia em quadrado no centro),
+// com máscara circular para o fundo preto do JPG se fundir com a cor do site.
+const ogFile = path.join(root, 'public/og-logo.jpg')
+if (force || !existsSync(ogFile)) {
+  const size = 380
+  const circle = Buffer.from(`<svg width="${size}" height="${size}"><circle cx="${size / 2}" cy="${size / 2}" r="${size / 2}"/></svg>`)
+  const badge = await sharp(logo)
+    .resize(size, size, { kernel: 'lanczos3' })
+    .composite([{ input: circle, blend: 'dest-in' }])
+    .png()
+    .toBuffer()
+  await sharp({ create: { width: 1200, height: 630, channels: 3, background: '#0D0D0E' } })
+    .composite([{ input: badge, gravity: 'center' }])
+    .jpeg({ quality: 88, mozjpeg: true })
+    .toFile(ogFile)
 }
 
-// Ícones a partir do logo (o original tem só 150px; trocar por um logo maior quando houver).
-const logo = path.join(srcDir, 'bruno-candido-logo.jpg')
 for (const [size, out] of [
   [32, 'favicon-32x32.png'],
   [180, 'apple-touch-icon.png'],

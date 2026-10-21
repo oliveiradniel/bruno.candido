@@ -45,8 +45,9 @@ export const site = {
     'Formatura',
   ],
   logo: 'bruno-candido-logo',
-  ogImage: '/og-image.jpg',
-  ogImageAlt: 'Família abraçada sorrindo em festa de aniversário, foto de Bruno Candido',
+  // Nome novo a cada troca de imagem: WhatsApp e Facebook guardam a prévia em cache pela URL.
+  ogImage: '/og-logo.jpg',
+  ogImageAlt: 'Logo Bruno Candido Foto: câmera laranja com as iniciais BC sobre fundo preto',
 } as const
 
 // Mensagens pré-preenchidas dos CTAs de WhatsApp fora dos cards de serviço e pacotes.
