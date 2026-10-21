@@ -1,0 +1,106 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/manrope/wght.css';
+@import '@fontsource/instrument-serif/400.css';
+@import '@fontsource/instrument-serif/400-italic.css';
+
+@theme {
+  --font-sans: 'Manrope Variable', system-ui, sans-serif;
+  --font-serif: 'Instrument Serif', Georgia, serif;
+
+  --color-ink: #0d0d0e;
+  --color-surface: #161618;
+  --color-cream: #f3efe8;
+  --color-sand: #e9e3d9;
+  --color-body: #cfcac2;
+  --color-muted: #a9a6a0;
+  --color-accent: #f06a1f;
+  --color-rust: #b5470c;
+  --color-paper-ink: #1a1918;
+  --color-paper-body: #4a4640;
+  --color-paper-muted: #5e5a54;
+
+  --text-section: clamp(40px, 4.6vw, 64px);
+  --text-section-lg: clamp(40px, 4.6vw, 68px);
+  --text-section-sm: clamp(36px, 4vw, 56px);
+
+  --ease-soft: cubic-bezier(0.2, 0.7, 0.2, 1);
+
+  --animate-marquee: marquee 38s linear infinite;
+  --animate-services: services 48s linear infinite;
+  --animate-faq-in: faq-in 0.5s var(--ease-soft) both;
+
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  @keyframes services {
+    to {
+      transform: translateX(calc(-50% - 10px));
+    }
+  }
+  @keyframes faq-in {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    interpolate-size: allow-keywords;
+  }
+
+  body {
+    background: var(--color-ink);
+    color: var(--color-cream);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a {
+    transition:
+      color 0.25s ease,
+      opacity 0.25s ease;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+
+  /* Pseudo-elementos nativos do <details> que o Tailwind não alcança. */
+  summary {
+    list-style: none;
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+  details::details-content {
+    height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition:
+      height 0.45s var(--ease-soft),
+      opacity 0.35s ease,
+      content-visibility 0.45s allow-discrete;
+  }
+  details[open]::details-content {
+    height: auto;
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+    }
+  }
+}
